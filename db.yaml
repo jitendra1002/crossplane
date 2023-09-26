@@ -1,7 +1,7 @@
 apiVersion: apiextensions.crossplane.io/v1
 kind: Composition
 metadata:
-  name: example
+  name: example1
 spec:
   compositeTypeRef:
     apiVersion: database.example.org/v1alpha1
