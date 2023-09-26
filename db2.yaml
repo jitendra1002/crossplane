@@ -1,0 +1,74 @@
+apiVersion: apiextensions.crossplane.io/v1
+kind: Composition
+metadata:
+  name: xblobs.infrastructure.example.org
+  labels:
+    provider: azure
+spec:
+  compositeTypeRef:
+    apiVersion: infrastructure.example.org/v1alpha1
+    kind: XBlob
+  resources:
+    - base: 
+        apiVersion: azure.upbound.io/v1beta1
+        kind: ResourceGroup
+        spec:
+          forProvider:
+            location: West Europe
+      patches:
+        - fromFieldPath: spec.parameters.resourcegroup
+          toFieldPath: metadata.annotations[crossplane.io/external-name]
+    - base:
+        apiVersion: storage.azure.upbound.io/v1beta1
+        kind: Account
+        metadata:
+            name: storageaccount
+        spec:
+          forProvider:
+            accountReplicationType: LRS
+            accountTier: Standard
+            location: westus
+            resourceGroupNameSelector:
+              matchControllerRef: true
+            tags:
+              provisioner: Upbound
+          writeConnectionSecretToRef:
+            name: blob-storage-account
+            namespace: upbound-system
+      patches:
+        - fromFieldPath: spec.id
+          toFieldPath: metadata.annotations[crossplane.io/external-name]
+    - base:
+        apiVersion: storage.azure.upbound.io/v1beta1
+        kind: Container
+        spec:
+          forProvider:
+            containerAccessType: private
+            storageAccountNameSelector:
+              matchControllerRef: true
+      patches:
+        - fromFieldPath: spec.id
+          toFieldPath: metadata.annotations[crossplane.io/external-name]
+          transforms:
+            - type: string
+              string:
+                fmt: "%s-container"
+        - fromFieldPath: spec.id
+          toFieldPath: metadata.name
+          transforms:
+            - type: string
+              string:
+                fmt: "%s-container"
+    - base:
+        apiVersion: storage.azure.upbound.io/v1beta1
+        kind: Blob
+        spec:
+          forProvider:
+            storageAccountNameSelector:
+              matchControllerRef: true
+            storageContainerNameSelector:
+              matchControllerRef: true
+            type: Block
+      patches:
+        - fromFieldPath: spec.id
+          toFieldPath: metadata.annotations[crossplane.io/external-name]

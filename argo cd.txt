@@ -1,0 +1,19 @@
+https://blog.kubesimplify.com/getting-started-with-kind-creating-a-multi-node-local-kubernetes-cluster
+https://docs.crossplane.io/latest/getting-started/provider-azure/
+https://spacelift.io/blog/argocd
+kubectl create namespace argocd
+kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/v2.8.4/manifests/install.yaml
+kubectl port-forward svc/argocd-server -n argocd 8080:443  
+https://localhost:8080/
+
+argo cd command refrence for getting more details about command
+
+kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}"
+OR try
+first check the kubectl server (pod) name from kubectl get pod -n argocd
+kubectl exec argocd-server-5985b6cf6f-fd2sr argocd admin initial-password -n argocd
+
+
+
+
+password argocd admin uVqE1jU-VF6-tNXc

@@ -1,0 +1,15 @@
+apiVersion: storage.azure.crossplane.io/v1alpha3
+kind: Account
+metadata:
+  ##make sure the length is less 24 char
+  name: foxutechstoragexplane1
+spec:
+  resourceGroupName: rg-crossplane
+  storageAccountSpec:
+    kind: Storage
+    location: West Europe
+    sku:
+      name: Standard_LRS
+  writeConnectionSecretToRef:
+    namespace: default
+    name: storageaccount-connection-secret 
