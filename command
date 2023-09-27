@@ -10,3 +10,11 @@ kubectl get crossplane: get all resources related to Crossplane.
 kubectl get crds
 kubectl get xrds
 kubectl config set-context --current --namespace=my-namespace      -- set the setting of ns
+
+
+
+
+> git push 
+
+> git pull
+ git commit -m "resolved merge conflicts or any other message"
