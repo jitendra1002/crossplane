@@ -16,4 +16,3 @@ kubectl exec argocd-server-5985b6cf6f-fd2sr argocd admin initial-password -n arg
 
 
 
-password argocd admin uVqE1jU-VF6-tNXc
