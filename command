@@ -8,3 +8,5 @@ kubectl get managed: get all resources that represent a unit of external infrast
 kubectl get <name-of-provider>: get all resources related to .
 kubectl get crossplane: get all resources related to Crossplane.
 kubectl get crds
+kubectl get xrds
+kubectl config set-context --current --namespace=my-namespace      -- set the setting of ns
