@@ -1,24 +1,23 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: react-application
+  name: nginx-deployment
+  labels:
+    app: web
 spec:
-<<<<<<< HEAD
-  replicas: 13
-=======
-  replicas: 1
->>>>>>> 32ec5934fb87e6e426cb67006ba7a2fdb7039180
   selector:
     matchLabels:
-      run: react-application
+      app: web
+  replicas: 5
+  strategy:
+    type: RollingUpdate
   template:
     metadata:
       labels:
-        run: react-application
+        app: web
     spec:
       containers:
-      - name: react-application
-        image: anaisurlichs/react-article-display:master
-        ports:
-          - containerPort: 8080
-        imagePullPolicy: Always
+       —name: nginx
+          image: nginx
+          ports:
+           —containerPort: 80
