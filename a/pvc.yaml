@@ -1,12 +1,20 @@
-# local path provisioner only supports readwriteonce
-apiVersion: v1
-kind: PersistentVolumeClaim
+apiVersion: apps/v1
+kind: Deployment
 metadata:
-  name: pvc-test
+  name: react-application
 spec:
-  storageClassName: standard
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 500Mi
+  replicas: 2
+  selector:
+    matchLabels:
+      run: react-application
+  template:
+    metadata:
+      labels:
+        run: react-application
+    spec:
+      containers:
+      - name: react-application
+        image: anaisurlichs/react-article-display:master
+        ports:
+          - containerPort: 80
+        imagePullPolicy: Always
